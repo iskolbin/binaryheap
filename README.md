@@ -7,6 +7,23 @@ BinaryHeap.new( [iparray] )
 ---------------------------
 Create new binary heap. You can pass **iparray** to initialize heap with *O(n)* complexity (implemented with **batchenq**, see below).
 
+```lua
+local heap = BinaryHeap.new()
+```
+
+```lua
+local heap = BinaryHeap()
+```
+
+```lua
+local security = BinaryHeap{ 
+	'high', 1, 
+	'low', 10, 
+	'moderate', 5, 
+	'moderate-', 7, 
+	'moderate+', 3}
+```
+
 enqueue( item, priority )
 -------------------------
 Enqueue the **item** with the **priority** to the heap. The **priority** must be comparable, i.e. it must be either number or string or a table with metatable with **__lt** metamethod defined. Time complexity is *O(logn)*.
@@ -34,7 +51,7 @@ Efficiently enqueues list of item-priority pairs into the heap. *Note that this 
 
 Indirect Binary Heap
 ====================
-If you need to change priority or remove specific item from the heap efficiently you should use this implementation. It's slighthly slower and consumes more memory than direct approach, but allows fast removal and updating priorities by saving of locations of elements in the heap. *Note that this implementations doesn't allow repeating items*. It has the same methods as common binary heap and adds follow:
+If you need to change priority or remove specific item from the heap efficiently you should use this implementation. It's slighthly slower and consumes more memory than direct approach, but allows fast removal and updating priorities by saving the indices of the elements in the heap. *Note that this implementations doesn't allow repeating items*. It has the same methods as direct binary heap and adds follow:
 
 indexof( item )
 ---------------
@@ -43,6 +60,8 @@ Returns index of the **item** in the heap or **nil** otherwise. It can be used f
 remove( item )
 --------------
 Removes the **item** from the heap. Returns **true** if **item** was in the heap and **false** otherwise.
+
+Also indirect binary heap modifies behavior of this methods:
 
 enqueue( item, priority )
 -------------------------
