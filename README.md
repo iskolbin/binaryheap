@@ -55,7 +55,7 @@ If you need to change priority or remove specific item from the heap efficiently
 
 indexof( item )
 ---------------
-Returns index of the **item** in the heap or **nil** otherwise. It can be used for checking is the heap contains the **item**.
+Returns index of the **item** in the heap or **nil** otherwise. It can be used for checking does the heap contain the **item**.
 
 remove( item )
 --------------
