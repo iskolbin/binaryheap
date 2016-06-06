@@ -34,7 +34,7 @@ Efficiently enqueues list of item-priority pairs into the heap. *Note that this 
 
 Indirect Binary Heap
 ====================
-If you need to change priority or remove specific item for the heap efficiently you should use this implementation. It's slighthly slower and consumes more memory than direct approach, but allows fast removal and updating priorities by saving of locations of elements in the heap. *Note that this implementations doesn't allow repeating items*. It has the same methods as common binary heap and adds follow:
+If you need to change priority or remove specific item from the heap efficiently you should use this implementation. It's slighthly slower and consumes more memory than direct approach, but allows fast removal and updating priorities by saving of locations of elements in the heap. *Note that this implementations doesn't allow repeating items*. It has the same methods as common binary heap and adds follow:
 
 indexof( item )
 ---------------
