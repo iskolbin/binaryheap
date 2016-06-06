@@ -1,19 +1,19 @@
 Binary Min Heap
 ===============
 
-Lua implementation of **Priority Queue** using **Binary Min Heap**. Note that you can use it as **Max Heap** -- simply pass negative priorities to **enqueue** function. If you need efficient removing and changing priorities consider using **Indirect Binary Heap**. 
+Lua implementation of *priority queue* using *binary min heap*. Note that you can use it as *max heap* -- simply pass negative priorities to the **enqueue** function. If you need efficient removing and changing priorities consider using *indirect binary heap* (see below). 
 
 BinaryHeap.new( [iparray] )
 ---------------------------
-Create new binary heap. You can pass iparray to initialize heap with _O(n)_ complexity(implemented with **batchenq**, see below).
+Create new binary heap. You can pass **iparray** to initialize heap with *O(n)* complexity (implemented with **batchenq**, see below).
 
 enqueue( item, priority )
 -------------------------
-Enqueue the **item** with the **priority** to the heap. The **priority** must be comarable, i.e. it must be either number or string or a table with metatable with **__lt** metamethod defined. Time complexity is _O(logn)_.
+Enqueue the **item** with the **priority** to the heap. The **priority** must be comparable, i.e. it must be either number or string or a table with metatable with **__lt** metamethod defined. Time complexity is *O(logn)*.
 
 dequeue()
 ---------
-Dequeue from the heap. If the heap is empty **error** called. Returns an item with minimal priority. Time complexity is _O(logn)_.
+Dequeue from the heap. If the heap is empty then an **error** will raise. Returns an item with minimal priority. Time complexity is *O(logn)*.
 
 peek()
 ------
@@ -29,12 +29,12 @@ Returns **true** if the heap has no items and **false** otherwise.
 
 batchenq( iparray )
 -------------------
-Efficiently enqueues list of item-priority pairs into the heap. *Note that this is efficient only when the amount of inserting elements greater or equal than the current length*. Time complexity of this operation in _O(n)_ while sequential approach is _O(nlogn)_.
+Efficiently enqueues list of item-priority pairs into the heap. *Note that this is efficient only when the amount of inserting elements greater or equal than the current length*. Time complexity of this operation in *O(n)* while sequential approach is *O(nlogn)*.
 
 
 Indirect Binary Heap
 ====================
-If you need to change priority or remove specific item for the heap efficiently you should use this implementation. It's slighthly slower and consumes more memory than direct approach, but allows fast removal and updating priorities by saving of locations of elements in the heap. _Note that this implementations doesn't allow repeating items_. It has the same methods as common binary heap and adds follow:
+If you need to change priority or remove specific item for the heap efficiently you should use this implementation. It's slighthly slower and consumes more memory than direct approach, but allows fast removal and updating priorities by saving of locations of elements in the heap. *Note that this implementations doesn't allow repeating items*. It has the same methods as common binary heap and adds follow:
 
 indexof( item )
 ---------------
@@ -46,8 +46,8 @@ Removes the **item** from the heap. Returns **true** if **item** was in the heap
 
 enqueue( item, priority )
 -------------------------
-Same as _BinaryHeap.enqueue_ but you are not allowed to enqueue the same items and if the heap already contains the **item** then it change it's **priority**.
+Same as *BinaryHeap.enqueue* but you are not allowed to enqueue the same items and if the heap already contains the **item** then it change it's **priority**.
 
 batchenq( iparray )
 -------------------
-Same as _BinaryHeap.batchenq_ but you are not allowed to enqueue the same items. If the same items are in the **iparray** then it takes the _first priority encountered_.
+Same as **BinaryHeap.batchenq** but you are not allowed to enqueue the same items. If the same items are in the **iparray** then it takes the *first priority encountered*.
