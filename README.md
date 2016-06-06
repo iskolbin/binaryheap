@@ -61,6 +61,7 @@ remove( item )
 --------------
 Removes the **item** from the heap. Returns **true** if **item** was in the heap and **false** otherwise.
 
+
 Also indirect binary heap modifies behavior of this methods:
 
 enqueue( item, priority )
