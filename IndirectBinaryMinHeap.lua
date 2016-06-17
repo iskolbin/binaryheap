@@ -48,7 +48,6 @@ function IndirectBinaryHeap.new( iparray_ )
 		_priorities = {},
 		_indices = {},
 		_size = 0,
-		_batch = 0,
 	}, IndirectBinaryHeapMt )
 	
 	if iparray_ then
@@ -58,12 +57,12 @@ function IndirectBinaryHeap.new( iparray_ )
 	return self
 end
 
-function IndirectBinaryHeap:indexof( item )
-	return self._indices[item]
+function IndirectBinaryHeap:contains( item )
+	return self._indices[item] ~= nil
 end
 
 function IndirectBinaryHeap:remove( item )
-	local index = self:indexof( item )
+	local index = self._indices[item]
 	if index ~= nil then
 		local items, priorities, indicies = self._items, self._priorities, self._indices
 		local size = self._size
@@ -85,7 +84,7 @@ end
 
 function IndirectBinaryHeap:enqueue( item, priority )
 	local items, priorities, indices = self._items, self._priorities, self._indices
-	local oldindex = self:indexof( item )
+	local oldindex = self._indices[item]
 	if oldindex then
 		if priorities[oldindex] ~= priority then
 			priorities[oldindex] = priority

@@ -1,57 +1,78 @@
-local BinaryHeap = require 'BinaryHeap'
-local IndirectBinaryHeap =require 'IndirectBinaryHeap'
+local BinaryMinHeap = require 'BinaryMinHeap'
+local BinaryMaxHeap = require 'BinaryMaxHeap'
+local IndirectBinaryMinHeap = require 'IndirectBinaryMinHeap'
+local IndirectBinaryMaxHeap = require 'IndirectBinaryMaxHeap'
 
 local cases = {
 	length = function()
-		local bh = BinaryHeap()
+		local bh = BinaryMinHeap()
 		bh:enqueue( 'a', 2 )
 		bh:enqueue( 'b', 4 )
 		bh:enqueue( 'c', 1 )
 		bh:enqueue( 'd', 6 )
-		return #bh == 4 and bh:len() == 4
+		local bhx = BinaryMaxHeap()
+		bhx:enqueue( 'a', 2 )
+		bhx:enqueue( 'b', 4 )
+		bhx:enqueue( 'c', 1 )
+		bhx:enqueue( 'd', 6 )
+		return #bh == 4 and bh:len() == 4 and bhx:len() == 4 and #bhx == 4
 	end,
 
 	enq_deq = function()
-		local bh = BinaryHeap()
+		local bh = BinaryMinHeap()
 		bh:enqueue( 'a', 2 )
 		bh:enqueue( 'b', 4 )
 		bh:enqueue( 'c', 1 )
 		bh:enqueue( 'd', 6 )
-		return bh:dequeue() == 'c' and bh:dequeue() == 'a' and bh:dequeue() == 'b' and bh:dequeue() == 'd'
+		local bhx = BinaryMaxHeap()
+		bhx:enqueue( 'a', 2 )
+		bhx:enqueue( 'b', 4 )
+		bhx:enqueue( 'c', 1 )
+		bhx:enqueue( 'd', 6 )
+		return bh:dequeue() == 'c' and bh:dequeue() == 'a' and bh:dequeue() == 'b' and bh:dequeue() == 'd' and bhx:dequeue() == 'd' and bhx:dequeue() == 'b' and bhx:dequeue() == 'a' and bhx:dequeue() == 'c'
 	end,
 
 	batch_enq = function()
-		local bh = BinaryHeap.new()
+		local bh = BinaryMinHeap.new()
 		bh:batchenq{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-		return bh:dequeue() == 'c' and bh:dequeue() == 'a' and bh:dequeue() == 'b' and bh:dequeue() == 'd'
+		local bhx = BinaryMaxHeap.new()
+		bhx:batchenq{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		return bh:dequeue() == 'c' and bh:dequeue() == 'a' and bh:dequeue() == 'b' and bh:dequeue() == 'd' and bhx:dequeue() == 'd' and bhx:dequeue() == 'b' and bhx:dequeue() == 'a' and bhx:dequeue() == 'c'
 	end,
 
 	new_batch = function()
-		local bh = BinaryHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-		return bh:dequeue() == 'c' and bh:dequeue() == 'a' and bh:dequeue() == 'b' and bh:dequeue() == 'd'
+		local bh = BinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		local bhx = BinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		return bh:dequeue() == 'c' and bh:dequeue() == 'a' and bh:dequeue() == 'b' and bh:dequeue() == 'd' and bhx:dequeue() == 'd' and bhx:dequeue() == 'b' and bhx:dequeue() == 'a' and bhx:dequeue() == 'c'
 	end,
 
 	empty = function()
-		local bh = BinaryHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-		local bh2 = BinaryHeap.new()
-		return not bh:empty() and bh:dequeue() == 'c' and bh:dequeue() == 'a' and bh:dequeue() == 'b' and bh:dequeue() == 'd' and bh:empty() and bh2:empty()
+		local bh = BinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		local bh2 = BinaryMinHeap.new()
+		local bhx = BinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		local bhx2 = BinaryMaxHeap.new()
+		return not bh:empty() and bh:dequeue() == 'c' and bh:dequeue() == 'a' and bh:dequeue() == 'b' and bh:dequeue() == 'd' and bh:empty() and bh2:empty() and
+			not bhx:empty() and bhx:dequeue() == 'd' and bhx:dequeue() == 'b' and bhx:dequeue() == 'a' and bhx:dequeue() == 'c' and bhx2:empty()
 	end,
 	
 	peek = function()
-		local bh = BinaryHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-		return bh:peek() == 'c' and bh:dequeue() == 'c' and bh:peek() == bh:dequeue() 
+		local bh = BinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		local bhx = BinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		return bh:peek() == 'c' and bh:dequeue() == 'c' and bh:peek() == bh:dequeue() and bhx:peek() == 'd' and bhx:dequeue() == 'd' and bhx:peek() == 'b'
 	end,
 
 	heapsort = function()
-		local bh = BinaryHeap()
+		local bh = BinaryMinHeap()
+		local bhx = BinaryMaxHeap()
 		local array = {}
 		for i = 1, 1000 do
 			array[i] = math.random()
 			bh:enqueue( array[i], array[i] )
+			bhx:enqueue( array[i], -array[i] )
 		end
 		table.sort( array )
 		for i = 1, #bh do
-			if bh:dequeue() ~= array[i] then
+			if bh:dequeue() ~= array[i] or bhx:dequeue() ~= array[i] then
 				return false
 			end
 		end
@@ -61,17 +82,19 @@ local cases = {
 
 	simulation = function()
 		local items = {}
-		local bh = BinaryHeap()
+		local bh = BinaryMinHeap()
+		local bhx = BinaryMaxHeap()
 
 		for i = 1, 1000 do
 			if #items == 0 or math.random() < 0.5 then
 				local item = math.random()
 				bh:enqueue( item, item )
+				bhx:enqueue( item, -item )
 				table.insert( items, item )
 				table.sort( items )
 			else
 				local item = bh:dequeue()
-				if item ~= table.remove( items, 1 ) then
+				if item ~= table.remove( items, 1 ) or item ~= bhx:dequeue() then
 					return false
 				end
 			end
@@ -84,10 +107,13 @@ local cases = {
 local indircases = {}
 for k, v in pairs( cases ) do
 	indircases['indir_' .. k] = function()
-		local _BinaryHeap = BinaryHeap
-		BinaryHeap = IndirectBinaryHeap
+		local _BinaryMinHeap = BinaryMinHeap
+		local _BinaryMaxHeap = BinaryMaxHeap
+		BinaryMinHeap = IndirectBinaryMinHeap
+		BinaryMaxHeap = IndirectBinaryMaxHeap
 		local result = v()
-		BinaryHeap = _BinaryHeap
+		BinaryMinHeap = _BinaryMinHeap
+		BinaryMaxHeap = _BinaryMaxHeap
 		return result
 	end
 end
@@ -97,14 +123,19 @@ for k, v in pairs( indircases ) do
 end
 
 cases.indir_existence = function()
-	local ibh = IndirectBinaryHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-	return ibh:indexof('a') and ibh:indexof('b') and ibh:indexof('c') and ibh:indexof('d') and
-	(not ibh:indexof('z')) and (not ibh:indexof('x')) and (not ibh:indexof('y')) and (not ibh:indexof('q'))
+	local ibh = IndirectBinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+	local ibhx = IndirectBinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+	return ibh:contains('a') and ibh:contains('b') and ibh:contains('c') and ibh:contains('d') and
+	(not ibh:contains('z')) and (not ibh:contains('x')) and (not ibh:contains('y')) and (not ibh:contains('q'))
+	and ibhx:contains('a') and ibhx:contains('b') and ibhx:contains('c') and ibhx:contains('d') and
+	(not ibhx:contains('z')) and (not ibhx:contains('x')) and (not ibhx:contains('y')) and (not ibhx:contains('q'))
 end
 
 cases.indir_remove = function()
-	local ibh = IndirectBinaryHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-	return ibh:indexof('a') and (not ibh:remove('z')) and ibh:len() == 4 and #ibh == 4 and ibh:remove('a') and (not ibh:indexof('a')) and ibh:len() == 3 and ibh:remove('b') and ibh:remove('d') and ibh:remove('c') and ibh:empty()
+	local ibh = IndirectBinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+	local ibhx = IndirectBinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+	return ibh:contains('a') and (not ibh:remove('z')) and ibh:len() == 4 and #ibh == 4 and ibh:remove('a') and (not ibh:contains('a')) and ibh:len() == 3 and ibh:remove('b') and ibh:remove('d') and ibh:remove('c') and ibh:empty()
+		--and ibhx:contains('a') and (not ibhx:remove('z')) and ibhx:len() == 4 and #ibhx == 4 and ibhx:remove('a') and (not ibhx:contains('a')) and ibhx:len() == 3 and ibhx:remove('b') and ibhx:remove('d') and ibhx:remove('c') and ibhx:empty()
 end
 
 local function runCases( cs )
@@ -124,7 +155,7 @@ local function runCases( cs )
 	return passed, failed
 end
 
-print( 'Testing binary heap, direct and indirect' )
+print( 'Testing binary min/max heap, direct and indirect' )
 local passed, failed = runCases( cases )
 
 if failed > 0 then

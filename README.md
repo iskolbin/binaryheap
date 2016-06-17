@@ -1,7 +1,8 @@
-Binary Min Heap
-===============
+Binary Heap
+===========
 
-Lua implementation of *priority queue* using *binary min heap*. Note that you can use it as *max heap* -- simply pass negative priorities to the **enqueue** function. If you need efficient removing and changing priorities consider using *indirect binary heap* (see below). 
+Lua implementation of *priority queue* data structure using *binary heap*. There are 4 modules: *BinaryMinHeap*, *BinaryMaxHeap*, *IndirectBinaryMinHeap* and *IndirectBinaryMaxHeap*.
+*Min* and *Max* implementations differ only in ordering. Indirect heaps offer efficient removal and updating priority operations.
 
 BinaryHeap.new( [iparray] )
 ---------------------------
@@ -30,11 +31,11 @@ Enqueue the **item** with the **priority** to the heap. The **priority** must be
 
 dequeue()
 ---------
-Dequeue from the heap. If the heap is empty then an **error** will raise. Returns an item with minimal priority. Time complexity is *O(logn)*.
+Dequeue from the heap. If the heap is empty then an **error** will raise. Returns an item with minimal priority for BinaryMinHeap(maximal for BinaryMaxHeap). Time complexity is *O(logn)*.
 
 peek()
 ------
-Returns the item with minimal priority or **nil** if the heap is empty.
+Returns the item with minimal priority for BinaryMinHeap(maximal for BinaryMaxHeap) or **nil** if the heap is empty.
 
 len()
 -----
