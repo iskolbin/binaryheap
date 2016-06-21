@@ -94,7 +94,7 @@ function IndirectBinaryHeap:enqueue( item, priority )
 		if priorities[oldindex] ~= priority then
 			priorities[oldindex] = priority
 			local siftedindex = siftup( item, priority, indices, oldindex )
-			siftdown( items, priorities, indices, size, siftedindex )
+			siftdown( items, priorities, indices, self._size, siftedindex )
 		end
 	else
 		local size = self._size + 1

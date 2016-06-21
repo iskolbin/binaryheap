@@ -54,9 +54,9 @@ Indirect Binary Heap
 ====================
 If you need to change priority or remove specific item from the heap efficiently you should use this implementation. It's slighthly slower and consumes more memory than direct approach, but allows fast removal and updating priorities by saving the indices of the elements in the heap. *Note that this implementations doesn't allow repeating items*. It has the same methods as direct binary heap and adds follow:
 
-indexof( item )
+contains( item )
 ---------------
-Returns index of the **item** in the heap or **nil** otherwise. It can be used for checking does the heap contain the **item**.
+Checking that heap contains the **item**.
 
 remove( item )
 --------------
