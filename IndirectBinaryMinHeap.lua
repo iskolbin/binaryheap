@@ -1,3 +1,8 @@
+-- Indirect binary min heap.
+-- Allows efficient removing and updating.
+--
+-- coded by Ilya Kolbin ( iskolbin@gmail.com )
+
 local floor, setmetatable = math.floor, setmetatable
 
 local function siftup( items, priorities, indices, init )

@@ -1,3 +1,7 @@
+-- Binary min heap.
+--
+-- coded by Ilya Kolbin ( iskolbin@gmail.com )
+
 local floor, setmetatable = math.floor, setmetatable
 
 local function siftup( items, priorities, size )
