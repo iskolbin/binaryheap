@@ -43,17 +43,17 @@ local function siftdown( items, priorities, indices, size, limit )
 	end
 end
 
-local IndirectBinaryHeapMt
+local IndirectBinaryMinHeapMt
 
-local IndirectBinaryHeap = {}
+local IndirectBinaryMinHeap = {}
 
-function IndirectBinaryHeap.new( iparray_ )
+function IndirectBinaryMinHeap.new( iparray_ )
 	local self = setmetatable( {
 		_items = {},
 		_priorities = {},
 		_indices = {},
 		_size = 0,
-	}, IndirectBinaryHeapMt )
+	}, IndirectBinaryMinHeapMt )
 	
 	if iparray_ then
 		self:batchenq( iparray_ )
@@ -62,11 +62,11 @@ function IndirectBinaryHeap.new( iparray_ )
 	return self
 end
 
-function IndirectBinaryHeap:contains( item )
+function IndirectBinaryMinHeap:contains( item )
 	return self._indices[item] ~= nil
 end
 
-function IndirectBinaryHeap:remove( item )
+function IndirectBinaryMinHeap:remove( item )
 	local index = self._indices[item]
 	if index ~= nil then
 		local items, priorities, indicies = self._items, self._priorities, self._indices
@@ -87,7 +87,7 @@ function IndirectBinaryHeap:remove( item )
 	end
 end
 
-function IndirectBinaryHeap:enqueue( item, priority )
+function IndirectBinaryMinHeap:enqueue( item, priority )
 	local items, priorities, indices = self._items, self._priorities, self._indices
 	local oldindex = self._indices[item]
 	if oldindex then
@@ -105,7 +105,7 @@ function IndirectBinaryHeap:enqueue( item, priority )
 	return self
 end
 
-function IndirectBinaryHeap:dequeue()
+function IndirectBinaryMinHeap:dequeue()
 	local size = self._size
 	
 	assert( size > 0, 'Heap is empty' )
@@ -125,19 +125,19 @@ function IndirectBinaryHeap:dequeue()
 	return item
 end
 
-function IndirectBinaryHeap:peek()
+function IndirectBinaryMinHeap:peek()
 	return self._items[1]
 end
 	
-function IndirectBinaryHeap:len()
+function IndirectBinaryMinHeap:len()
 	return self._size
 end
 
-function IndirectBinaryHeap:empty()
+function IndirectBinaryMinHeap:empty()
 	return self._size <= 0
 end
 
-function IndirectBinaryHeap:batchenq( iparray )
+function IndirectBinaryMinHeap:batchenq( iparray )
 	local items, priorities, indicies = self._items, self._priorities, self._indices
 	local size = self._size
 	for i = 1, #iparray, 2 do
@@ -152,13 +152,13 @@ function IndirectBinaryHeap:batchenq( iparray )
 	end
 end
 
-IndirectBinaryHeapMt = {
-	__index = IndirectBinaryHeap,
-	__len = IndirectBinaryHeap.len,
+IndirectBinaryMinHeapMt = {
+	__index = IndirectBinaryMinHeap,
+	__len = IndirectBinaryMinHeap.len,
 }
       
-return setmetatable( IndirectBinaryHeap, {
+return setmetatable( IndirectBinaryMinHeap, {
 	__call = function( _, ... )
-		return IndirectBinaryHeap.new( ... )
+		return IndirectBinaryMinHeap.new( ... )
 	end
 } )
