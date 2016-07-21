@@ -39,17 +39,17 @@ local function siftdown( items, priorities, size, limit )
 	end
 end
 
-local BinaryHeapMt
+local BinaryMinHeapMt
 
-local BinaryHeap = {}
+local BinaryMinHeap = {}
 
-function BinaryHeap.new( iparray_ )
+function BinaryMinHeap.new( iparray_ )
 	local self = setmetatable( {
 		_items = {},
 		_priorities = {},
 		_size = 0,
 		_batch = 0,
-	}, BinaryHeapMt )
+	}, BinaryMinHeapMt )
 	
 	if iparray_ then
 		self:batchenq( iparray_ )
@@ -58,7 +58,7 @@ function BinaryHeap.new( iparray_ )
 	return self
 end
 
-function BinaryHeap:enqueue( item, priority )
+function BinaryMinHeap:enqueue( item, priority )
 	local size = self._size + 1
 	local items, priorities = self._items, self._priorities
 	self._size = size	
@@ -67,7 +67,7 @@ function BinaryHeap:enqueue( item, priority )
 	return self
 end
 
-function BinaryHeap:dequeue()
+function BinaryMinHeap:dequeue()
 	local size = self._size
 	
 	assert( size > 0, 'Heap is empty' )
@@ -87,19 +87,19 @@ function BinaryHeap:dequeue()
 	return item
 end
 
-function BinaryHeap:peek()
+function BinaryMinHeap:peek()
 	return self._items[1]
 end
 	
-function BinaryHeap:len()
+function BinaryMinHeap:len()
 	return self._size
 end
 
-function BinaryHeap:empty()
+function BinaryMinHeap:empty()
 	return self._size <= 0
 end
 
-function BinaryHeap:batchenq( iparray )
+function BinaryMinHeap:batchenq( iparray )
 	local items, priorities = self._items, self._priorities
 	local size = self._size
 	for i = 1, #iparray, 2 do
@@ -112,13 +112,13 @@ function BinaryHeap:batchenq( iparray )
 	end
 end
 
-BinaryHeapMt = {
-	__index = BinaryHeap,
-	__len = BinaryHeap.len,
+BinaryMinHeapMt = {
+	__index = BinaryMinHeap,
+	__len = BinaryMinHeap.len,
 }
       
-return setmetatable( BinaryHeap, {
+return setmetatable( BinaryMinHeap, {
 	__call = function( _, ... )
-		return BinaryHeap.new( ... )
+		return BinaryMinHeap.new( ... )
 	end
 } )
