@@ -102,6 +102,28 @@ local cases = {
 
 		return true
 	end,
+	
+	existence = function()
+		local bh = BinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		local bhx = BinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		return bh:contains('a') and bh:contains('b') and bh:contains('c') and bh:contains('d') and
+		(not bh:contains('z')) and (not bh:contains('x')) and (not bh:contains('y')) and (not bh:contains('q'))
+		and bhx:contains('a') and bhx:contains('b') and bhx:contains('c') and bhx:contains('d') and
+		(not bhx:contains('z')) and (not bhx:contains('x')) and (not bhx:contains('y')) and (not bhx:contains('q'))
+	end,
+
+	remove = function()
+		local bh = BinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		local bhx = BinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		return bh:contains('a') and (not bh:remove('z')) and bh:len() == 4 and #bh == 4 and bh:remove('a') and (not bh:contains('a')) and bh:len() == 3 and bh:remove('b') and bh:remove('d') and bh:remove('c') and bh:empty()
+		and bhx:contains('a') and (not bhx:remove('z')) and bhx:len() == 4 and #bhx == 4 and bhx:remove('a') and (not bhx:contains('a')) and bhx:len() == 3 and bhx:remove('b') and bhx:remove('d') and bhx:remove('c') and bhx:empty()
+		end,
+
+	update = function()
+		local bh = BinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		local bhx = BinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
+		return bh:update('a', 0) and bh:peek() == 'a' and bh:remove('a') and (not bh:contains('a')) and (bh:update('c', 2)) and (not bh:update('z',5))
+	end,
 }
 
 local indircases = {}
@@ -117,25 +139,8 @@ for k, v in pairs( cases ) do
 		return result
 	end
 end
-
 for k, v in pairs( indircases ) do
 	cases[k] = v
-end
-
-cases.indir_existence = function()
-	local ibh = IndirectBinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-	local ibhx = IndirectBinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-	return ibh:contains('a') and ibh:contains('b') and ibh:contains('c') and ibh:contains('d') and
-	(not ibh:contains('z')) and (not ibh:contains('x')) and (not ibh:contains('y')) and (not ibh:contains('q'))
-	and ibhx:contains('a') and ibhx:contains('b') and ibhx:contains('c') and ibhx:contains('d') and
-	(not ibhx:contains('z')) and (not ibhx:contains('x')) and (not ibhx:contains('y')) and (not ibhx:contains('q'))
-end
-
-cases.indir_remove = function()
-	local ibh = IndirectBinaryMinHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-	local ibhx = IndirectBinaryMaxHeap.new{ 'a', 2, 'b', 4, 'c', 1, 'd', 6 }
-	return ibh:contains('a') and (not ibh:remove('z')) and ibh:len() == 4 and #ibh == 4 and ibh:remove('a') and (not ibh:contains('a')) and ibh:len() == 3 and ibh:remove('b') and ibh:remove('d') and ibh:remove('c') and ibh:empty()
-		--and ibhx:contains('a') and (not ibhx:remove('z')) and ibhx:len() == 4 and #ibhx == 4 and ibhx:remove('a') and (not ibhx:contains('a')) and ibhx:len() == 3 and ibhx:remove('b') and ibhx:remove('d') and ibhx:remove('c') and ibhx:empty()
 end
 
 local function runCases( cs )

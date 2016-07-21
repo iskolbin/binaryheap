@@ -49,23 +49,38 @@ batchenq( iparray )
 -------------------
 Efficiently enqueues list of item-priority pairs into the heap. *Note that this is efficient only when the amount of inserting elements greater or equal than the current length*. Time complexity of this operation in *O(n)* while sequential approach is *O(nlogn)*.
 
-
-Indirect Binary Heap
-====================
-If you need to change priority or remove specific item from the heap efficiently you should use this implementation. It's slighthly slower and consumes more memory than direct approach, but allows fast removal and updating priorities by saving the indices of the elements in the heap. *Note that this implementations doesn't allow repeating items*. It has the same methods as direct binary heap and adds follow:
-
 contains( item )
 ---------------
-Checking that heap contains the **item**.
+Checking that heap contains the **item**. This operation is *O(n)* for direct binary heaps.
 
 remove( item )
 --------------
-Removes the **item** from the heap. Returns **true** if **item** was in the heap and **false** otherwise.
+Removes the **item** from the heap. Returns **true** if **item** was in the heap and **false** otherwise. This operation is *O(n)* for direct binary heaps.
+
+update( item, priority )
+------------------------
+Changes **item** **priority**. Returns **true** if **item** was in the heap (even if priority not changed) and **false** otherwise. This operation is *O(n)* for direct binary heaps, internally it's just **remove** followed by **enqueue**.
+
+Indirect Binary Heap
+====================
+If you need to change priority or remove specific item from the heap efficiently you should use this implementation. It's slighthly slower and consumes more memory than direct approach, but allows fast removal and updating priorities by saving the indices of the elements in the heap. *Note that this implementations doesn't allow repeating items*. It has the same methods, but has some differences in their behavior:
 
 enqueue( item, priority )
 -------------------------
-Same as **BinaryHeap.enqueue** but you are not allowed to enqueue the same items and if the heap already contains the **item** then it change it's **priority**.
+Same as **BinaryHeap.enqueue** but you are not allowed to enqueue the same items and if the heap already contains the **item** then error is thrown.
 
 batchenq( iparray )
 -------------------
-Same as **BinaryHeap.batchenq** but you are not allowed to enqueue the same items. If the same items are in the **iparray** then it takes the *first priority encountered*.
+Same as **BinaryHeap.batchenq** but you are not allowed to enqueue the same items. If the same items are in the **iparray** then error is thrown.
+
+contains( item )
+----------------
+Has *O(1)* performance.
+
+remove( item )
+--------------
+Has *O(logn)* performance.
+
+update( item, priority )
+------------------------
+Has *O(logn)* performance.
