@@ -48,7 +48,6 @@ function BinaryMaxHeap.new( iparray_ )
 		_items = {},
 		_priorities = {},
 		_size = 0,
-		_batch = 0,
 	}, BinaryMaxHeapMt )
 	
 	if iparray_ then
