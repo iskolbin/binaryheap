@@ -126,7 +126,7 @@ function BinaryMaxHeap:dequeue()
 	assert( size > 0, 'Heap is empty' )
 	
 	local items, priorities = self._items, self._priorities
-	local item = items[1]
+	local item, priority = items[1], priorities[1]
 	
 
 	if size > 1 then
@@ -142,11 +142,11 @@ function BinaryMaxHeap:dequeue()
 		self._size = 0
 	end
 
-	return item
+	return item, priority
 end
 
 function BinaryMaxHeap:peek()
-	return self._items[1]
+	return self._items[1], self._priorities[1]
 end
 	
 function BinaryMaxHeap:len()

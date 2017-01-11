@@ -31,11 +31,11 @@ Enqueue the **item** with the **priority** to the heap. The **priority** must be
 
 dequeue()
 ---------
-Dequeue from the heap. If the heap is empty then an **error** will raise. Returns an item with minimal priority for BinaryMinHeap(maximal for BinaryMaxHeap). Time complexity is *O(logn)*.
+Dequeue from the heap. Returns item and associated priority. If the heap is empty then an **error** will raise. Returns an item with minimal priority for BinaryMinHeap(maximal for BinaryMaxHeap). Time complexity is *O(logn)*.
 
 peek()
 ------
-Returns the item with minimal priority for BinaryMinHeap(maximal for BinaryMaxHeap) or **nil** if the heap is empty.
+Returns the item with minimal priority and priority itself for BinaryMinHeap(maximal for BinaryMaxHeap) or **nil** if the heap is empty.
 
 len()
 -----

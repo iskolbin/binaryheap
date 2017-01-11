@@ -118,7 +118,7 @@ function IndirectBinaryMaxHeap:dequeue()
 	assert( size > 0, 'Heap is empty' )
 	
 	local items, priorities, indices = self._items, self._priorities, self._indices
-	local item = items[1]
+	local item, priority = items[1], priorities[1]
 	indices[item] = nil
 
 	if size > 1 then
@@ -134,11 +134,11 @@ function IndirectBinaryMaxHeap:dequeue()
 		self._size = 0
 	end
 
-	return item
+	return item, priority
 end
 
 function IndirectBinaryMaxHeap:peek()
-	return self._items[1]
+	return self._items[1], self._priorities[1]
 end
 	
 function IndirectBinaryMaxHeap:len()
